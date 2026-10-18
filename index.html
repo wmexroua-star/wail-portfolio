@@ -24,12 +24,12 @@ a{color:inherit}
 .wrap{max-width:1280px;margin:0 auto;padding:0 clamp(20px,4vw,48px)}
 section{padding:clamp(72px,12vw,150px) 0}
 .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--mute);margin-bottom:20px}
-.eyebrow b{color:var(--accent);font-weight:500;margin-right:10px}
+.eyebrow b{color:var(--accent);font-weight:500;margin-inline-end:10px}
 h2{font-size:clamp(44px,8vw,104px);font-weight:900}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 /* nav */
 header{position:fixed;inset:0 0 auto;z-index:20;padding-top:env(safe-area-inset-top,0px);background:rgba(11,11,12,.86);border-bottom:1px solid var(--line);backdrop-filter:blur(8px)}
-nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
 .logo{font:900 28px "Big Shoulders Display",sans-serif;letter-spacing:.08em;text-decoration:none}
 nav ul{display:flex;gap:32px;list-style:none;margin:0;padding:0}
 nav ul a{text-decoration:none;font-size:14px;color:var(--mute);transition:color .2s}
@@ -38,6 +38,7 @@ nav ul a:hover{color:var(--text)}
 .btn.fill{background:var(--accent);border-color:var(--accent);color:#0b0b0c;font-weight:500}
 .btn:hover{transform:translateY(-2px);background:var(--text);color:#0b0b0c;border-color:var(--text)}
 .nav-cta{padding:9px 18px}
+.menu-toggle{display:none}
 .nav-tools{display:flex;align-items:center;gap:10px}
 .language-select{padding:8px 10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:500 12px Inter,system-ui,sans-serif}
 :root[data-theme="light"] header{background:rgba(245,244,239,.9)}
@@ -46,9 +47,8 @@ nav ul a:hover{color:var(--text)}
 :root[data-theme="light"] dialog{background:var(--bg);color:var(--text)}
 :root[data-theme="light"] .btn.fill{color:#fff}
 :root[data-theme="light"] .btn:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
-@media(max-width:760px){nav ul{display:none}}
-@media(max-width:520px){.nav-tools{gap:6px}.language-select{padding:7px 6px}.nav-tools .nav-cta{padding:8px 10px;font-size:11px}}
-@media(max-width:360px){.nav-tools .nav-cta.fill{display:none}}
+@media(max-width:760px){nav ul{display:none}.menu-toggle{display:inline-block}nav ul.is-open{display:flex;position:absolute;inset-block-start:64px;inset-inline:0;flex-direction:column;gap:0;padding:8px 20px;background:var(--panel);border:1px solid var(--line);z-index:3}nav ul.is-open a{display:block;padding:12px 0}}
+@media(max-width:520px){.nav-tools{gap:6px}.language-select{padding:7px 6px}.nav-tools .nav-cta{padding:8px 10px;font-size:11px}.nav-tools .nav-cta.fill{display:none}}
 /* hero */
 .hero{min-height:100svh;display:flex;align-items:flex-end;padding:140px 0 64px;position:relative;overflow:hidden;
 background:radial-gradient(60% 50% at 78% 30%,#1c1c14 0,transparent 70%),var(--bg)}
@@ -60,13 +60,13 @@ background:radial-gradient(60% 50% at 78% 30%,#1c1c14 0,transparent 70%),var(--b
 .hero p{max-width:46ch;color:var(--mute);margin:0 0 28px}
 .hero .lead{font-size:clamp(20px,2.4vw,28px);color:var(--text);line-height:1.3;margin-bottom:16px}
 .actions{display:flex;gap:14px;flex-wrap:wrap}
-.tc{font:12px/1.8 Inter;letter-spacing:.2em;color:var(--mute);text-align:right}
+.tc{font:12px/1.8 Inter;letter-spacing:.2em;color:var(--mute);text-align:start}
 @media(max-width:760px){.hero .grid{grid-template-columns:1fr}.tc{display:none}}
 /* work */
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap}
-.note{font-size:13px;color:var(--mute);max-width:36ch;border-left:2px solid var(--accent);padding-left:14px}
+.note{font-size:13px;color:var(--mute);max-width:36ch;border-inline-start:2px solid var(--accent);padding-inline-start:14px}
 .work{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(14px,2vw,28px);align-items:start}
-.item{grid-column:span 6;background:none;border:0;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.item{grid-column:span 6;background:none;border:0;padding:0;text-align:start;color:inherit;font:inherit;cursor:pointer}
 .item.v{grid-column:span 3}.item.w{grid-column:span 8}
 .item.off{margin-top:56px}
 .thumb{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
@@ -74,8 +74,8 @@ background:radial-gradient(60% 50% at 78% 30%,#1c1c14 0,transparent 70%),var(--b
 .thumb img,.thumb .ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
 .ph{display:flex;align-items:flex-end;padding:16px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(236,233,226,.55)}
 .item:hover .ph,.item:hover img,.item:focus-visible .ph{transform:scale(1.05)}
-.play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px;border:1px solid var(--text);border-radius:50%;display:grid;place-items:center;opacity:0;transform:scale(.8);transition:.35s;background:rgba(11,11,12,.5)}
-.play::after{content:"";border-left:15px solid var(--text);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.play{position:absolute;inset-inline-start:50%;top:50%;width:68px;height:68px;margin:-34px;border:1px solid var(--text);border-radius:50%;display:grid;place-items:center;opacity:0;transform:scale(.8);transition:.35s;background:rgba(11,11,12,.5)}
+.play::after{content:"";border-inline-start:15px solid var(--text);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-inline-start:4px}
 .item:hover .play,.item:focus-visible .play{opacity:1;transform:none}
 @media(hover:none){.play{opacity:1;transform:none;width:52px;height:52px;margin:-26px}}
 .meta{display:flex;justify-content:space-between;gap:12px;padding-top:14px}
@@ -96,11 +96,11 @@ dialog::backdrop{background:rgba(0,0,0,.88)}
 .m-info h3{font-size:40px;margin-bottom:10px}
 .m-info dl{margin:20px 0 0;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:14px}
 .m-info dt{color:var(--mute)}.m-info dd{margin:0}
-.close{position:sticky;top:0;float:right;margin:12px 12px -48px 0;z-index:2}
+.close{position:sticky;top:0;float:inline-end;margin-block:12px -48px;margin-inline:0 12px;z-index:2}
 /* services */
 .services{margin-top:56px;border-top:1px solid var(--line)}
 .srv{display:grid;grid-template-columns:80px 1fr 1.2fr;gap:24px;padding:34px 0;border-bottom:1px solid var(--line);align-items:baseline;transition:padding .35s,background .35s}
-.srv:hover{padding-left:16px;background:linear-gradient(90deg,#17170f,transparent)}
+.srv:hover{padding-inline-start:16px;background:linear-gradient(90deg,#17170f,transparent)}
 .srv .n{color:var(--accent);font-size:13px;letter-spacing:.2em}
 .srv h3{font-size:clamp(28px,3.6vw,48px)}
 .srv p{margin:0;color:var(--mute)}
@@ -114,13 +114,13 @@ dialog::backdrop{background:rgba(0,0,0,.88)}
 @media(max-width:760px){.about{grid-template-columns:1fr}}
 /* workflow */
 .steps{display:grid;grid-template-columns:repeat(5,1fr);margin-top:56px;border-top:1px solid var(--line)}
-.step{padding:28px 20px 0 0;position:relative}
-.step::before{content:"";position:absolute;top:-5px;left:0;width:9px;height:9px;background:var(--accent)}
+.step{padding-block-start:28px;padding-inline-end:20px;position:relative}
+.step::before{content:"";position:absolute;top:-5px;inset-inline-start:0;width:9px;height:9px;background:var(--accent)}
 .step .n{font:900 56px "Big Shoulders Display",sans-serif;color:#2c2c30}
 .step h3{font-size:24px;line-height:1;margin-top:6px}
-@media(max-width:900px){.steps{grid-template-columns:1fr;border-top:0;border-left:1px solid var(--line);padding-left:28px}.step{padding:0 0 32px}.step::before{top:8px;left:-33px}}
+@media(max-width:900px){.steps{grid-template-columns:1fr;border-top:0;border-inline-start:1px solid var(--line);padding-inline-start:28px}.step{padding:0 0 32px}.step::before{top:8px;inset-inline-start:-33px}}
 /* contact */
-.contact{text-align:left;border-top:1px solid var(--line)}
+.contact{text-align:start;border-top:1px solid var(--line)}
 .contact h2{font-size:clamp(52px,11vw,170px)}
 .contact h2 em{font-style:normal;color:var(--accent)}
 .links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin-top:56px;border-top:1px solid var(--line)}
@@ -135,13 +135,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+[dir="rtl"] .role,[dir="rtl"] .eyebrow,[dir="rtl"] .btn{letter-spacing:0!important}
 </style>
 </head>
 <body>
 <header><div class="wrap"><nav aria-label="Main" data-i18n-aria="navLabel">
 <a class="logo" href="#top" data-k="brand"></a>
-<ul><li><a href="#work" data-i18n="navWork">Work</a></li><li><a href="#services" data-i18n="navServices">Services</a></li><li><a href="#about" data-i18n="navAbout">About</a></li><li><a href="#contact" data-i18n="navContact">Contact</a></li></ul>
-<div class="nav-tools"><select id="languageSelect" class="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option></select><button class="btn nav-cta" id="themeToggle" type="button" aria-pressed="false">Dark mode</button><a class="btn fill nav-cta" href="#contact" data-i18n="hire">Hire me</a></div>
+<ul id="siteNav"><li><a href="#work" data-i18n="navWork">Work</a></li><li><a href="#services" data-i18n="navServices">Services</a></li><li><a href="#about" data-i18n="navAbout">About</a></li><li><a href="#contact" data-i18n="navContact">Contact</a></li></ul>
+<div class="nav-tools"><button class="btn nav-cta menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button><select id="languageSelect" class="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option></select><button class="btn nav-cta" id="themeToggle" type="button" aria-pressed="false">Dark mode</button><a class="btn fill nav-cta" href="#contact" data-i18n="hire">Hire me</a></div>
 </nav></div></header>
 
 <main id="top">
@@ -301,7 +302,10 @@ async function loadProjects(){
         category:cell(values,"category"),
         orientation:orientation==="v"?"vertical":orientation==="h"?"horizontal":orientation,
         youtubeUrl:cell(values,"youtubeurl"),
-        description:cell(values,"description")
+        description:cell(values,"description"),
+        client:cell(values,"client"),
+        role:cell(values,"role"),
+        software:cell(values,"software")
       };
     }).filter(p=>p.id&&p.title&&p.category&&p.youtubeUrl&&p.description&&["vertical","horizontal"].includes(p.orientation));
     if(!projects.length)throw new Error("No valid projects were found");
@@ -343,12 +347,17 @@ function renderWorkflow(t){
 function renderContactLinks(t){
   L.textContent="";
   [[t.emailLabel,C.email,C.email&&"mailto:"+C.email],[t.instagramLabel,C.instagram,C.instagram],[t.linkedinLabel,C.linkedin,C.linkedin],[t.whatsappLabel,C.whatsapp,C.whatsapp]].forEach(([name,label,href])=>{
-    if(href){const a=el("a");a.href=href;a.target="_blank";a.rel="noopener";a.append(el("small","",name),el("strong","",label.replace(/^https?:\/\/(www\.)?/,"")));L.append(a)}
-    else{const d=el("div","ph2");d.append(el("small","",name),el("strong","",t.contactPlaceholder));L.append(d)}
+    if(!href||!String(label).trim()||/placeholder|example\.com/i.test(String(label)))return;
+    const a=el("a");a.href=href;if(!href.startsWith("mailto:")){a.target="_blank";a.rel="noopener"}a.append(el("small","",name),el("strong","",String(label).trim().replace(/^https?:\/\/(www\.)?/,"")));L.append(a);
   });
 }
 let activeLanguage="en",activeTheme="dark";
 try{const savedLanguage=localStorage.getItem("portfolio-language"),savedTheme=localStorage.getItem("portfolio-theme");if(I18N[savedLanguage])activeLanguage=savedLanguage;if(savedTheme==="light")activeTheme="light"}catch{}
+const MENU_LABELS={en:["Menu","Close"],fr:["Menu","Fermer"],ar:["القائمة","إغلاق"]},siteNav=$("#siteNav"),menuToggle=$("#menuToggle");
+function setMenuOpen(open){siteNav.classList.toggle("is-open",open);menuToggle.setAttribute("aria-expanded",String(open));menuToggle.textContent=MENU_LABELS[activeLanguage][open?1:0]}
+menuToggle.addEventListener("click",()=>setMenuOpen(menuToggle.getAttribute("aria-expanded")!=="true"));
+siteNav.addEventListener("click",e=>{if(e.target.closest("a"))setMenuOpen(false)});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")setMenuOpen(false)});
 function applyTheme(theme){
   activeTheme=theme==="light"?"light":"dark";document.documentElement.dataset.theme=activeTheme;
   const button=$("#themeToggle"),t=I18N[activeLanguage];button.textContent=activeTheme==="dark"?t.themeDark:t.themeLight;button.setAttribute("aria-pressed",String(activeTheme==="light"));
@@ -361,6 +370,7 @@ function applyLanguage(language){
   document.querySelectorAll("[data-i18n-html]").forEach(n=>{const value=t[n.dataset.i18nHtml];if(value!=null)n.innerHTML=value});
   document.querySelectorAll("[data-k='aboutLead'],[data-k='aboutBody']").forEach(n=>n.textContent=t[n.dataset.k]);
   $("nav").setAttribute("aria-label",t.navLabel);$("#languageSelect").setAttribute("aria-label",t.languageLabel);$("#languageSelect").value=activeLanguage;
+  menuToggle.textContent=MENU_LABELS[activeLanguage][menuToggle.getAttribute("aria-expanded")==="true"?1:0];
   renderServices(t);renderWorkflow(t);renderContactLinks(t);applyTheme(activeTheme);
 }
 $("#languageSelect").addEventListener("change",e=>{applyLanguage(e.target.value);try{localStorage.setItem("portfolio-language",activeLanguage)}catch{}});
