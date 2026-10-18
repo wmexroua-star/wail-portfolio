@@ -1,0 +1,50 @@
+[
+  {
+    "id": "project-001",
+    "title": "A Small Story, Told Slowly",
+    "category": "Documentary",
+    "orientation": "horizontal",
+    "youtubeUrl": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+    "description": "Sample documentary entry. Replace this with a real project description and video."
+  },
+  {
+    "id": "project-002",
+    "title": "Fragments in Motion",
+    "category": "Collage",
+    "orientation": "vertical",
+    "youtubeUrl": "https://www.youtube.com/shorts/M7lc1UVf-VE",
+    "description": "Sample vertical collage entry. Replace this with a real project description and video."
+  },
+  {
+    "id": "project-003",
+    "title": "Type Takes Shape",
+    "category": "Kinetic Animation",
+    "orientation": "horizontal",
+    "youtubeUrl": "https://youtu.be/aqz-KE-bpKQ",
+    "description": "Sample kinetic animation entry. Replace this with a real project description and video."
+  },
+  {
+    "id": "project-004",
+    "title": "One Minute Outside",
+    "category": "Documentary",
+    "orientation": "vertical",
+    "youtubeUrl": "https://www.youtube.com/watch?v=M7lc1UVf-VE",
+    "description": "Sample short documentary entry. Replace this with a real project description and video."
+  },
+  {
+    "id": "project-005",
+    "title": "Color, Cut, Repeat",
+    "category": "Collage",
+    "orientation": "horizontal",
+    "youtubeUrl": "https://youtu.be/jNQXAC9IVRw",
+    "description": "Sample collage edit entry. Replace this with a real project description and video."
+  },
+  {
+    "id": "project-006",
+    "title": "Moving Letters Study",
+    "category": "Kinetic Animation",
+    "orientation": "vertical",
+    "youtubeUrl": "https://www.youtube.com/shorts/aqz-KE-bpKQ",
+    "description": "Sample vertical type animation entry. Replace this with a real project description and video."
+  }
+]
