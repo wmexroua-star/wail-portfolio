@@ -15,6 +15,7 @@
 <style>
 :root{--bg:#0b0b0c;--panel:#141416;--line:#26262a;--text:#ece9e2;--mute:#8d8a84;--accent:#d9ff43;color-scheme:dark;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="light"]{--bg:#f5f4ef;--panel:#fff;--line:#d8d6ce;--text:#181819;--mute:#5e5d59;--accent:#526600;color-scheme:light}
 html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -37,7 +38,17 @@ nav ul a:hover{color:var(--text)}
 .btn.fill{background:var(--accent);border-color:var(--accent);color:#0b0b0c;font-weight:500}
 .btn:hover{transform:translateY(-2px);background:var(--text);color:#0b0b0c;border-color:var(--text)}
 .nav-cta{padding:9px 18px}
+.nav-tools{display:flex;align-items:center;gap:10px}
+.language-select{padding:8px 10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font:500 12px Inter,system-ui,sans-serif}
+:root[data-theme="light"] header{background:rgba(245,244,239,.9)}
+:root[data-theme="light"] .hero{background:radial-gradient(60% 50% at 78% 30%,#e5e2d2 0,transparent 70%),var(--bg)}
+:root[data-theme="light"] .hero::after{background:repeating-linear-gradient(90deg,transparent 0 119px,rgba(0,0,0,.045) 119px 120px)}
+:root[data-theme="light"] dialog{background:var(--bg);color:var(--text)}
+:root[data-theme="light"] .btn.fill{color:#fff}
+:root[data-theme="light"] .btn:hover{background:var(--text);color:var(--bg);border-color:var(--text)}
 @media(max-width:760px){nav ul{display:none}}
+@media(max-width:520px){.nav-tools{gap:6px}.language-select{padding:7px 6px}.nav-tools .nav-cta{padding:8px 10px;font-size:11px}}
+@media(max-width:360px){.nav-tools .nav-cta.fill{display:none}}
 /* hero */
 .hero{min-height:100svh;display:flex;align-items:flex-end;padding:140px 0 64px;position:relative;overflow:hidden;
 background:radial-gradient(60% 50% at 78% 30%,#1c1c14 0,transparent 70%),var(--bg)}
@@ -126,20 +137,20 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </style>
 </head>
 <body>
-<header><div class="wrap"><nav aria-label="Main">
+<header><div class="wrap"><nav aria-label="Main" data-i18n-aria="navLabel">
 <a class="logo" href="#top" data-k="brand"></a>
-<ul><li><a href="#work">Work</a></li><li><a href="#services">Services</a></li><li><a href="#about">About</a></li><li><a href="#contact">Contact</a></li></ul>
-<a class="btn fill nav-cta" href="#contact">Hire me</a>
+<ul><li><a href="#work" data-i18n="navWork">Work</a></li><li><a href="#services" data-i18n="navServices">Services</a></li><li><a href="#about" data-i18n="navAbout">About</a></li><li><a href="#contact" data-i18n="navContact">Contact</a></li></ul>
+<div class="nav-tools"><select id="languageSelect" class="language-select" aria-label="Language"><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option></select><button class="btn nav-cta" id="themeToggle" type="button" aria-pressed="false">Dark mode</button><a class="btn fill nav-cta" href="#contact" data-i18n="hire">Hire me</a></div>
 </nav></div></header>
 
 <main id="top">
 <section class="hero"><div class="wrap">
 <h1 data-k="brand"></h1>
-<div class="role" data-k="role"></div>
+<div class="role" data-k="role" data-i18n="role"></div>
 <div class="grid"><div>
-<p class="lead" data-k="tagline"></p><p data-k="intro"></p>
-<div class="actions"><a class="btn fill" href="#work">View my work</a><a class="btn" href="#contact">Contact me</a></div>
-</div><div class="tc">REELS · YOUTUBE · COMMERCIAL<br>OPEN FOR PAID PROJECTS</div></div>
+<p class="lead" data-k="tagline" data-i18n="tagline"></p><p data-k="intro" data-i18n="intro"></p>
+<div class="actions"><a class="btn fill" href="#work" data-i18n="viewWork">View my work</a><a class="btn" href="#contact" data-i18n="contactMe">Contact me</a></div>
+</div><div class="tc" data-i18n-html="badge">REELS · YOUTUBE · COMMERCIAL<br>OPEN FOR PAID PROJECTS</div></div>
 </div></section>
 
 <section id="work"><div class="wrap">
@@ -150,26 +161,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </div></section>
 
 <section id="services"><div class="wrap">
-<div class="eyebrow rv"><b>02</b>Services</div><h2 class="rv">What I edit</h2>
+<div class="eyebrow rv"><b>02</b><span data-i18n="servicesLabel">Services</span></div><h2 class="rv" data-i18n="servicesTitle">What I edit</h2>
 <div class="services" id="srv"></div>
 </div></section>
 
 <section id="about"><div class="wrap about">
-<div class="portrait rv">Profile image placeholder<br>Add your photo in CONFIG.about.photo</div>
-<div class="rv"><div class="eyebrow"><b>03</b>About</div>
-<h2 style="font-size:clamp(44px,7vw,88px)">Independent<br>video editor</h2>
+<div class="portrait rv" data-i18n-html="portraitPlaceholder">Profile image placeholder<br>Add your photo in CONFIG.about.photo</div>
+<div class="rv"><div class="eyebrow"><b>03</b><span data-i18n="aboutLabel">About</span></div>
+<h2 style="font-size:clamp(44px,7vw,88px)" data-i18n-html="aboutTitle">Independent<br>video editor</h2>
 <p class="big" data-k="aboutLead"></p><p data-k="aboutBody"></p></div>
 </div></section>
 
 <section id="workflow"><div class="wrap">
-<div class="eyebrow rv"><b>04</b>Workflow</div><h2 class="rv">From brief<br>to delivery</h2>
+<div class="eyebrow rv"><b>04</b><span data-i18n="workflowLabel">Workflow</span></div><h2 class="rv" data-i18n-html="workflowTitle">From brief<br>to delivery</h2>
 <div class="steps" id="steps"></div>
 </div></section>
 
 <section id="contact" class="contact"><div class="wrap">
-<div class="eyebrow rv"><b>05</b>Contact</div>
-<h2 class="rv">Let’s cut<br><em>something.</em></h2>
-<p class="rv" style="max-width:52ch;color:var(--mute);margin-top:28px" data-k="contactText"></p>
+<div class="eyebrow rv"><b>05</b><span data-i18n="contactLabel">Contact</span></div>
+<h2 class="rv" data-i18n-html="contactTitle">Let’s cut<br><em>something.</em></h2>
+<p class="rv" style="max-width:52ch;color:var(--mute);margin-top:28px" data-i18n="contactText"></p>
 <div class="links rv" id="links"></div>
 </div></section>
 </main>
@@ -208,6 +219,12 @@ const CONFIG = {
     ["Sound Design & Color Grading", "Clean audio, purposeful sound effects and a cinematic, consistent look."]
   ],
   workflow: ["Brief & Creative Direction","Footage & Asset Preparation","Editing & Motion Design","Sound Design & Color","Final Delivery"]
+};
+
+const I18N={
+  en:{navLabel:"Main navigation",navWork:"Work",navServices:"Services",navAbout:"About",navContact:"Contact",hire:"Hire me",viewWork:"View my work",contactMe:"Contact me",role:"VIDEO EDITOR",tagline:"I turn raw footage into compelling visual stories.",intro:"Short-form Reels, YouTube long-form and commercial edits, built around pace, clarity and a finish that holds up on every screen.",badge:"REELS · YOUTUBE · COMMERCIAL<br>OPEN FOR PAID PROJECTS",servicesLabel:"Services",servicesTitle:"What I edit",services:[["Short-Form Video Editing","Reels and Shorts with tight hooks, rhythm and captions built to hold attention."],["YouTube Video Editing","Structured long-form edits that keep viewers watching and your channel consistent."],["Commercial Video Editing","Promotional cuts that put the product and the message first."],["Motion Graphics & Kinetic Typography","Animated callouts and type that clarify the story, not decorate it."],["Sound Design & Color Grading","Clean audio, purposeful sound effects and a cinematic, consistent look."]],aboutLabel:"About",portraitPlaceholder:"Profile image placeholder<br>Add your photo in CONFIG.about.photo",aboutTitle:"Independent<br>video editor",aboutLead:CONFIG.about.lead,aboutBody:CONFIG.about.body,workflowLabel:"Workflow",workflowTitle:"From brief<br>to delivery",workflow:["Brief & Creative Direction","Footage & Asset Preparation","Editing & Motion Design","Sound Design & Color","Final Delivery"],contactLabel:"Contact",contactTitle:"Let’s cut<br><em>something.</em>",contactText:"Have a project in mind? Send a short brief with your goals, footage and deadline, and I’ll reply with a plan.",emailLabel:"Email",instagramLabel:"Instagram",linkedinLabel:"LinkedIn",whatsappLabel:"WhatsApp (optional)",contactPlaceholder:"Placeholder: add in CONFIG.contact",themeDark:"Dark mode",themeLight:"Light mode",languageLabel:"Language"},
+  fr:{navLabel:"Navigation principale",navWork:"Projets",navServices:"Services",navAbout:"À propos",navContact:"Contact",hire:"Me contacter",viewWork:"Voir mes projets",contactMe:"Me contacter",role:"MONTEUR VIDÉO",tagline:"Je transforme vos images brutes en histoires visuelles captivantes.",intro:"Des Reels courts, des vidéos YouTube longues et des montages publicitaires, conçus pour le rythme, la clarté et un rendu soigné sur tous les écrans.",badge:"REELS · YOUTUBE · PUBLICITÉ<br>DISPONIBLE POUR DES PROJETS RÉMUNÉRÉS",servicesLabel:"Services",servicesTitle:"Ce que je monte",services:[["Montage vidéo court","Reels et Shorts au rythme soutenu, avec des accroches et des sous-titres qui captent l’attention."],["Montage vidéo YouTube","Des montages longs et structurés qui fidélisent les spectateurs et donnent une cohérence à votre chaîne."],["Montage publicitaire","Des vidéos promotionnelles qui mettent le produit et le message au premier plan."],["Motion design et typographie animée","Des animations et textes qui servent le récit sans le surcharger."],["Design sonore et étalonnage","Un son net, des effets maîtrisés et une image cinématographique cohérente."]],aboutLabel:"À propos",portraitPlaceholder:"Emplacement de la photo<br>Ajoutez votre photo dans CONFIG.about.photo",aboutTitle:"Monteur vidéo<br>indépendant",aboutLead:"Monteur vidéo — je crée des vidéos qu’on ne fait pas défiler.",aboutBody:"Reels · YouTube · Publicités — Rythme, clarté et finition soignée sur tous les écrans.",workflowLabel:"Méthode",workflowTitle:"Du brief<br>à la livraison",workflow:["Brief et direction créative","Préparation des images et ressources","Montage et motion design","Son et étalonnage","Livraison finale"],contactLabel:"Contact",contactTitle:"Donnons vie<br><em>à vos idées.</em>",contactText:"Vous avez un projet ? Envoyez un bref aperçu de vos objectifs, de vos images et de votre délai ; je vous répondrai avec une proposition.",emailLabel:"E-mail",instagramLabel:"Instagram",linkedinLabel:"LinkedIn",whatsappLabel:"WhatsApp (facultatif)",contactPlaceholder:"À renseigner dans CONFIG.contact",themeDark:"Mode sombre",themeLight:"Mode clair",languageLabel:"Langue"},
+  ar:{navLabel:"التنقل الرئيسي",navWork:"الأعمال",navServices:"الخدمات",navAbout:"نبذة عني",navContact:"تواصل",hire:"اطلب العمل",viewWork:"شاهد أعمالي",contactMe:"تواصل معي",role:"محرر فيديو",tagline:"أحوّل اللقطات الخام إلى قصص بصرية آسرة.",intro:"مونتاج ريلز قصيرة وفيديوهات يوتيوب طويلة وإعلانات، بإيقاع واضح وجودة متقنة على كل شاشة.",badge:"ريلز · يوتيوب · إعلانات<br>متاح للمشاريع المدفوعة",servicesLabel:"الخدمات",servicesTitle:"ما الذي أحرّره",services:[["مونتاج الفيديوهات القصيرة","ريلز وشورتس بإيقاع جذاب ومقدمات سريعة وترجمة تحافظ على انتباه المشاهد."],["مونتاج فيديوهات يوتيوب","مونتاج طويل ومنظم يحافظ على متابعة المشاهدين ويمنح قناتك أسلوبًا متسقًا."],["مونتاج الإعلانات","مقاطع ترويجية تضع المنتج والرسالة في المقدمة."],["الرسوم المتحركة والطباعة الحركية","عناصر ونصوص متحركة توضّح القصة دون تشتيت الانتباه."],["تصميم الصوت وتصحيح الألوان","صوت نقي ومؤثرات مدروسة ومظهر سينمائي متناسق."]],aboutLabel:"نبذة عني",portraitPlaceholder:"مكان الصورة الشخصية<br>أضف صورتك في CONFIG.about.photo",aboutTitle:"محرر فيديو<br>مستقل",aboutLead:"محرر فيديو — أصنع مقاطع لا يتجاوزها المشاهد.",aboutBody:"ريلز · يوتيوب · إعلانات — بإيقاع واضح وجودة متقنة على كل شاشة.",workflowLabel:"آلية العمل",workflowTitle:"من الفكرة<br>إلى التسليم",workflow:["تحديد الموجز والتوجه الإبداعي","تجهيز اللقطات والملفات","المونتاج والرسوم المتحركة","الصوت وتصحيح الألوان","التسليم النهائي"],contactLabel:"تواصل",contactTitle:"لنصنع<br><em>شيئًا مميزًا.</em>",contactText:"هل لديك مشروع؟ أرسل نبذة عن أهدافك واللقطات والموعد النهائي، وسأرد عليك بخطة مناسبة.",emailLabel:"البريد الإلكتروني",instagramLabel:"إنستغرام",linkedinLabel:"لينكدإن",whatsappLabel:"واتساب (اختياري)",contactPlaceholder:"أضف بيانات التواصل في CONFIG.contact",themeDark:"الوضع الداكن",themeLight:"الوضع الفاتح",languageLabel:"اللغة"}
 };
 
 const $=(s,r=document)=>r.querySelector(s), el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
@@ -314,22 +331,46 @@ $("#x").onclick=closeModal;
 dlg.addEventListener("click",e=>{if(e.target===dlg)closeModal()});
 dlg.addEventListener("cancel",e=>{e.preventDefault();closeModal()});
 
-/* services & steps */
-const srv=$("#srv");
-CONFIG.services.forEach(([t,d],i)=>{const r=el("div","srv rv");r.append(el("span","n","0"+(i+1)),el("h3","",t),el("p","",d));srv.append(r)});
-const st=$("#steps");
-CONFIG.workflow.forEach((s,i)=>{const d=el("div","step rv");d.append(el("div","n","0"+(i+1)),el("h3","",s));st.append(d)});
-
-/* contact */
-const L=$("#links"),C=CONFIG.contact;
-[["Email",C.email,C.email&&"mailto:"+C.email],["Instagram",C.instagram,C.instagram],["LinkedIn",C.linkedin,C.linkedin],["WhatsApp (optional)",C.whatsapp,C.whatsapp]].forEach(([n,label,href])=>{
-  if(href){const a=el("a");a.href=href;a.target="_blank";a.rel="noopener";a.append(el("small","",n),el("strong","",label.replace(/^https?:\/\/(www\.)?/,"")));L.append(a)}
-  else{const d=el("div","ph2");d.append(el("small","",n),el("strong","","Placeholder: add in CONFIG.contact"));L.append(d)}
-});
+/* translated services, workflow and contact labels */
+const srv=$("#srv"),st=$("#steps"),L=$("#links"),C=CONFIG.contact;
+function renderServices(t){
+  srv.textContent="";
+  t.services.forEach(([title,description],i)=>{const r=el("div","srv rv");r.append(el("span","n","0"+(i+1)),el("h3","",title),el("p","",description));srv.append(r);io.observe(r)});
+}
+function renderWorkflow(t){
+  st.textContent="";
+  t.workflow.forEach((label,i)=>{const d=el("div","step rv");d.append(el("div","n","0"+(i+1)),el("h3","",label));st.append(d);io.observe(d)});
+}
+function renderContactLinks(t){
+  L.textContent="";
+  [[t.emailLabel,C.email,C.email&&"mailto:"+C.email],[t.instagramLabel,C.instagram,C.instagram],[t.linkedinLabel,C.linkedin,C.linkedin],[t.whatsappLabel,C.whatsapp,C.whatsapp]].forEach(([name,label,href])=>{
+    if(href){const a=el("a");a.href=href;a.target="_blank";a.rel="noopener";a.append(el("small","",name),el("strong","",label.replace(/^https?:\/\/(www\.)?/,"")));L.append(a)}
+    else{const d=el("div","ph2");d.append(el("small","",name),el("strong","",t.contactPlaceholder));L.append(d)}
+  });
+}
+let activeLanguage="en",activeTheme="dark";
+try{const savedLanguage=localStorage.getItem("portfolio-language"),savedTheme=localStorage.getItem("portfolio-theme");if(I18N[savedLanguage])activeLanguage=savedLanguage;if(savedTheme==="light")activeTheme="light"}catch{}
+function applyTheme(theme){
+  activeTheme=theme==="light"?"light":"dark";document.documentElement.dataset.theme=activeTheme;
+  const button=$("#themeToggle"),t=I18N[activeLanguage];button.textContent=activeTheme==="dark"?t.themeDark:t.themeLight;button.setAttribute("aria-pressed",String(activeTheme==="light"));
+  $("meta[name='theme-color']").content=activeTheme==="dark"?"#0b0b0c":"#f5f4ef";
+}
+function applyLanguage(language){
+  activeLanguage=I18N[language]?language:"en";const t=I18N[activeLanguage];
+  document.documentElement.lang=activeLanguage;document.documentElement.dir=activeLanguage==="ar"?"rtl":"ltr";
+  document.querySelectorAll("[data-i18n]").forEach(n=>{const value=t[n.dataset.i18n];if(value!=null)n.textContent=value});
+  document.querySelectorAll("[data-i18n-html]").forEach(n=>{const value=t[n.dataset.i18nHtml];if(value!=null&&!(n.dataset.i18nHtml==="portraitPlaceholder"&&CONFIG.about.photo))n.innerHTML=value});
+  document.querySelectorAll("[data-k='aboutLead'],[data-k='aboutBody']").forEach(n=>n.textContent=t[n.dataset.k]);
+  $("nav").setAttribute("aria-label",t.navLabel);$("#languageSelect").setAttribute("aria-label",t.languageLabel);$("#languageSelect").value=activeLanguage;
+  renderServices(t);renderWorkflow(t);renderContactLinks(t);applyTheme(activeTheme);
+}
+$("#languageSelect").addEventListener("change",e=>{applyLanguage(e.target.value);try{localStorage.setItem("portfolio-language",activeLanguage)}catch{}});
+$("#themeToggle").addEventListener("click",()=>{applyTheme(activeTheme==="dark"?"light":"dark");try{localStorage.setItem("portfolio-theme",activeTheme)}catch{}});
 
 /* reveal */
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll(".rv").forEach(n=>io.observe(n));
+applyLanguage(activeLanguage);
 loadProjects();
 </script>
 </body>
