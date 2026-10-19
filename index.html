@@ -64,7 +64,9 @@ background:radial-gradient(60% 50% at 78% 30%,#1c1c14 0,transparent 70%),var(--b
 .hero .lead{font-size:clamp(20px,2.4vw,28px);color:var(--text);line-height:1.3;margin-bottom:16px}
 .actions{display:flex;gap:14px;flex-wrap:wrap}
 .tc{font:12px/1.8 Inter;letter-spacing:.2em;color:var(--mute);text-align:start}
-@media(max-width:760px){.hero .grid{grid-template-columns:1fr}.tc{display:none}}
+.paid-badge{display:block;width:max-content;max-width:100%;padding:14px 18px;border:1px solid var(--accent);border-inline-start-width:4px;background:var(--panel);color:var(--text);font-size:11px;letter-spacing:.14em}
+.paid-badge strong{display:block;margin-block-start:5px;color:var(--accent);font-size:14px;font-weight:700}
+@media(max-width:760px){.hero .grid{grid-template-columns:1fr}.paid-badge{margin-block-start:20px}}
 /* work */
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap}
 .note{font-size:13px;color:var(--mute);max-width:36ch;border-inline-start:2px solid var(--accent);padding-inline-start:14px}
@@ -86,6 +88,20 @@ background:radial-gradient(60% 50% at 78% 30%,#1c1c14 0,transparent 70%),var(--b
 .meta span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);white-space:nowrap;padding-top:4px}
 .item p{margin:6px 0 0;font-size:14px;color:var(--mute)}
 @media(max-width:900px){.item.v{grid-column:span 6}.item.w,.item{grid-column:span 12}.item.off{margin-top:0}}
+/* before / after comparison */
+.comparison-copy{max-width:58ch;margin:18px 0 32px;color:var(--mute)}
+.comparison-stage{--split:50%;position:relative;isolation:isolate;overflow:hidden;aspect-ratio:16/9;max-height:78vh;background:linear-gradient(135deg,#38372f,#161719 52%,#899078);border:1px solid var(--line);touch-action:pan-y;user-select:none}
+.compare-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;pointer-events:none}
+.comparison-stage.is-demo .compare-after{filter:saturate(1.12) contrast(1.05)}
+.compare-before{clip-path:inset(0 calc(100% - var(--split)) 0 0)}
+.comparison-stage.is-demo .compare-before{filter:grayscale(.85) saturate(.45) brightness(.72) contrast(.92)}
+.comparison-stage::after{content:"";position:absolute;inset-block:0;left:var(--split);width:2px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.18);transform:translateX(-50%);pointer-events:none}
+.compare-label{position:absolute;z-index:2;top:16px;padding:8px 11px;background:rgba(11,11,12,.76);color:#fff;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;pointer-events:none}
+.compare-label.before{left:16px}.compare-label.after{right:16px}
+.compare-range{position:absolute;z-index:3;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:ew-resize;touch-action:pan-y}
+.compare-range:focus-visible{opacity:1;outline:2px solid var(--accent);outline-offset:-4px}
+.compare-handle{position:absolute;z-index:2;top:50%;left:var(--split);width:46px;height:46px;display:grid;place-items:center;border:1px solid #fff;border-radius:50%;background:var(--accent);color:#111;transform:translate(-50%,-50%);font-size:21px;line-height:1;pointer-events:none;box-shadow:0 2px 14px rgba(0,0,0,.28)}
+@media(max-width:520px){.comparison-stage{aspect-ratio:4/3}.compare-label{top:10px;padding:7px 9px;font-size:9px}.compare-label.before{left:10px}.compare-label.after{right:10px}.compare-handle{width:40px;height:40px}}
 /* modal */
 dialog{border:1px solid var(--line);background:#050505;color:var(--text);padding:0;max-width:min(1100px,94vw);width:100%;max-height:92vh;overflow:auto}
 dialog::backdrop{background:rgba(0,0,0,.88)}
@@ -121,6 +137,9 @@ dialog::backdrop{background:rgba(0,0,0,.88)}
 .step::before{content:"";position:absolute;top:-5px;inset-inline-start:0;width:9px;height:9px;background:var(--accent)}
 .step .n{font:900 56px "Big Shoulders Display",sans-serif;color:#2c2c30}
 .step h3{font-size:24px;line-height:1;margin-top:6px}
+.step p{margin:12px 0 10px;color:var(--mute);font-size:13px;line-height:1.5;max-width:30ch}
+.step .duration{display:block;color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+[dir="rtl"] .step .duration{letter-spacing:0!important}
 @media(max-width:900px){.steps{grid-template-columns:1fr;border-top:0;border-inline-start:1px solid var(--line);padding-inline-start:28px}.step{padding:0 0 32px}.step::before{top:8px;inset-inline-start:-33px}}
 /* contact */
 .contact{text-align:start;border-top:1px solid var(--line)}
@@ -138,7 +157,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .rv{opacity:0;transform:translateY(28px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1)}
 .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
-[dir="rtl"] .role,[dir="rtl"] .eyebrow,[dir="rtl"] .btn{letter-spacing:0!important}
+[dir="rtl"] .role,[dir="rtl"] .eyebrow,[dir="rtl"] .btn,[dir="rtl"] .paid-badge{letter-spacing:0!important}
 </style>
 </head>
 <body>
@@ -155,7 +174,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 <div class="grid"><div>
 <p class="lead" data-k="tagline" data-i18n="tagline"></p><p data-k="intro" data-i18n="intro"></p>
 <div class="actions"><a class="btn fill" href="#work" data-i18n="viewWork">View my work</a><a class="btn" href="#contact" data-i18n="contactMe">Contact me</a></div>
-</div><div class="tc" data-i18n-html="badge">REELS · YOUTUBE · COMMERCIAL<br>OPEN FOR PAID PROJECTS</div></div>
+</div><div class="tc paid-badge" data-i18n-html="badge">REELS · YOUTUBE · COMMERCIAL<br><strong>OPEN FOR PAID PROJECTS</strong></div></div>
 </div></section>
 
 <section id="work"><div class="wrap">
@@ -165,25 +184,38 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 <div class="work" id="grid"></div>
 </div></section>
 
+<section id="comparison" hidden><div class="wrap">
+<div class="eyebrow rv"><b>02</b><span data-i18n="comparisonLabel">Before / After</span></div>
+<h2 class="rv" data-i18n="comparisonTitle">Raw to finished</h2>
+<p class="comparison-copy rv" data-i18n="comparisonText">Drag the slider to compare an ungraded preview with a polished color treatment.</p>
+<div class="comparison-stage rv" id="comparisonStage" role="group" aria-label="Before and after preview">
+<img class="compare-image compare-after" alt="" aria-hidden="true">
+<img class="compare-image compare-before" alt="" aria-hidden="true">
+<span class="compare-label before" data-i18n="comparisonBefore">Before</span><span class="compare-label after" data-i18n="comparisonAfter">After</span>
+<span class="compare-handle" aria-hidden="true">↔</span>
+<input class="compare-range" id="comparisonRange" type="range" min="0" max="100" value="50" dir="ltr" aria-label="Drag to compare before and after">
+</div>
+</div></section>
+
 <section id="services"><div class="wrap">
-<div class="eyebrow rv"><b>02</b><span data-i18n="servicesLabel">Services</span></div><h2 class="rv" data-i18n="servicesTitle">What I edit</h2>
+<div class="eyebrow rv"><b>03</b><span data-i18n="servicesLabel">Services</span></div><h2 class="rv" data-i18n="servicesTitle">What I edit</h2>
 <div class="services" id="srv"></div>
 </div></section>
 
 <section id="about"><div class="wrap about">
 <div class="portrait rv"><img src="profile.jpg" alt="Portrait of WAIL"></div>
-<div class="rv"><div class="eyebrow"><b>03</b><span data-i18n="aboutLabel">About</span></div>
+<div class="rv"><div class="eyebrow"><b>04</b><span data-i18n="aboutLabel">About</span></div>
 <h2 style="font-size:clamp(44px,7vw,88px)" data-i18n-html="aboutTitle">Independent<br>video editor</h2>
 <p class="big" data-k="aboutLead"></p><p data-k="aboutBody"></p></div>
 </div></section>
 
 <section id="workflow"><div class="wrap">
-<div class="eyebrow rv"><b>04</b><span data-i18n="workflowLabel">Workflow</span></div><h2 class="rv" data-i18n-html="workflowTitle">From brief<br>to delivery</h2>
+<div class="eyebrow rv"><b>05</b><span data-i18n="workflowLabel">Workflow</span></div><h2 class="rv" data-i18n-html="workflowTitle">From brief<br>to delivery</h2>
 <div class="steps" id="steps"></div>
 </div></section>
 
 <section id="contact" class="contact"><div class="wrap">
-<div class="eyebrow rv"><b>05</b><span data-i18n="contactLabel">Contact</span></div>
+<div class="eyebrow rv"><b>06</b><span data-i18n="contactLabel">Contact</span></div>
 <h2 class="rv" data-i18n-html="contactTitle">Let’s cut<br><em>something.</em></h2>
 <p class="rv" style="max-width:52ch;color:var(--mute);margin-top:28px" data-i18n="contactText"></p>
 <div class="links rv" id="links"></div>
@@ -205,8 +237,8 @@ const CONFIG = {
   tagline: "I turn raw footage into compelling visual stories.",
   intro: "Short-form Reels, YouTube long-form and commercial edits, built around pace, clarity and a finish that holds up on every screen.",
   about: {
-    lead: "Video Editor — I make videos people don't scroll past.",
-    body: "Reels · YouTube · Ads — Built around pace, clarity and a finish that holds up on every screen.",
+    lead: "Video editor in English, French, and Arabic — I make videos people don't scroll past.",
+    body: "I edit and deliver in English, French, and Arabic. Reels · YouTube · Ads — built around pace, clarity, and a finish that holds up on every screen.",
   },
   contactText: "Have a project in mind? Send a short brief with your goals, footage and deadline, and I’ll reply with a plan.",
   contact: {
@@ -226,9 +258,9 @@ const CONFIG = {
 };
 
 const I18N={
-  en:{navLabel:"Main navigation",navWork:"Work",navServices:"Services",navAbout:"About",navContact:"Contact",hire:"Hire me",viewWork:"View my work",contactMe:"Contact me",role:"VIDEO EDITOR",tagline:"I turn raw footage into compelling visual stories.",intro:"Short-form Reels, YouTube long-form and commercial edits, built around pace, clarity and a finish that holds up on every screen.",badge:"REELS · YOUTUBE · COMMERCIAL<br>OPEN FOR PAID PROJECTS",servicesLabel:"Services",servicesTitle:"What I edit",services:[["Short-Form Video Editing","Reels and Shorts with tight hooks, rhythm and captions built to hold attention."],["YouTube Video Editing","Structured long-form edits that keep viewers watching and your channel consistent."],["Commercial Video Editing","Promotional cuts that put the product and the message first."],["Motion Graphics & Kinetic Typography","Animated callouts and type that clarify the story, not decorate it."],["Sound Design & Color Grading","Clean audio, purposeful sound effects and a cinematic, consistent look."]],aboutLabel:"About",aboutTitle:"Independent<br>video editor",aboutLead:CONFIG.about.lead,aboutBody:CONFIG.about.body,workflowLabel:"Workflow",workflowTitle:"From brief<br>to delivery",workflow:["Brief & Creative Direction","Footage & Asset Preparation","Editing & Motion Design","Sound Design & Color","Final Delivery"],contactLabel:"Contact",contactTitle:"Let’s cut<br><em>something.</em>",contactText:"Have a project in mind? Send a short brief with your goals, footage and deadline, and I’ll reply with a plan.",emailLabel:"Email",instagramLabel:"Instagram",linkedinLabel:"LinkedIn",whatsappLabel:"WhatsApp",themeDark:"Dark mode",themeLight:"Light mode",languageLabel:"Language"},
-  fr:{navLabel:"Navigation principale",navWork:"Projets",navServices:"Services",navAbout:"À propos",navContact:"Contact",hire:"Me contacter",viewWork:"Voir mes projets",contactMe:"Me contacter",role:"MONTEUR VIDÉO",tagline:"Je transforme vos images brutes en histoires visuelles captivantes.",intro:"Des Reels courts, des vidéos YouTube longues et des montages publicitaires, conçus pour le rythme, la clarté et un rendu soigné sur tous les écrans.",badge:"REELS · YOUTUBE · PUBLICITÉ<br>DISPONIBLE POUR DES PROJETS RÉMUNÉRÉS",servicesLabel:"Services",servicesTitle:"Ce que je monte",services:[["Montage vidéo court","Reels et Shorts au rythme soutenu, avec des accroches et des sous-titres qui captent l’attention."],["Montage vidéo YouTube","Des montages longs et structurés qui fidélisent les spectateurs et donnent une cohérence à votre chaîne."],["Montage publicitaire","Des vidéos promotionnelles qui mettent le produit et le message au premier plan."],["Motion design et typographie animée","Des animations et textes qui servent le récit sans le surcharger."],["Design sonore et étalonnage","Un son net, des effets maîtrisés et une image cinématographique cohérente."]],aboutLabel:"À propos",aboutTitle:"Monteur vidéo<br>indépendant",aboutLead:"Monteur vidéo — je crée des vidéos qu’on ne fait pas défiler.",aboutBody:"Reels · YouTube · Publicités — Rythme, clarté et finition soignée sur tous les écrans.",workflowLabel:"Méthode",workflowTitle:"Du brief<br>à la livraison",workflow:["Brief et direction créative","Préparation des images et ressources","Montage et motion design","Son et étalonnage","Livraison finale"],contactLabel:"Contact",contactTitle:"Donnons vie<br><em>à vos idées.</em>",contactText:"Vous avez un projet ? Envoyez un bref aperçu de vos objectifs, de vos images et de votre délai ; je vous répondrai avec une proposition.",emailLabel:"E-mail",instagramLabel:"Instagram",linkedinLabel:"LinkedIn",whatsappLabel:"WhatsApp",themeDark:"Mode sombre",themeLight:"Mode clair",languageLabel:"Langue"},
-  ar:{navLabel:"التنقل الرئيسي",navWork:"الأعمال",navServices:"الخدمات",navAbout:"نبذة عني",navContact:"تواصل",hire:"اطلب العمل",viewWork:"شاهد أعمالي",contactMe:"تواصل معي",role:"محرر فيديو",tagline:"أحوّل اللقطات الخام إلى قصص بصرية آسرة.",intro:"مونتاج ريلز قصيرة وفيديوهات يوتيوب طويلة وإعلانات، بإيقاع واضح وجودة متقنة على كل شاشة.",badge:"ريلز · يوتيوب · إعلانات<br>متاح للمشاريع المدفوعة",servicesLabel:"الخدمات",servicesTitle:"ما الذي أحرّره",services:[["مونتاج الفيديوهات القصيرة","ريلز وشورتس بإيقاع جذاب ومقدمات سريعة وترجمة تحافظ على انتباه المشاهد."],["مونتاج فيديوهات يوتيوب","مونتاج طويل ومنظم يحافظ على متابعة المشاهدين ويمنح قناتك أسلوبًا متسقًا."],["مونتاج الإعلانات","مقاطع ترويجية تضع المنتج والرسالة في المقدمة."],["الرسوم المتحركة والطباعة الحركية","عناصر ونصوص متحركة توضّح القصة دون تشتيت الانتباه."],["تصميم الصوت وتصحيح الألوان","صوت نقي ومؤثرات مدروسة ومظهر سينمائي متناسق."]],aboutLabel:"نبذة عني",aboutTitle:"محرر فيديو<br>مستقل",aboutLead:"محرر فيديو — أصنع مقاطع لا يتجاوزها المشاهد.",aboutBody:"ريلز · يوتيوب · إعلانات — بإيقاع واضح وجودة متقنة على كل شاشة.",workflowLabel:"آلية العمل",workflowTitle:"من الفكرة<br>إلى التسليم",workflow:["تحديد الموجز والتوجه الإبداعي","تجهيز اللقطات والملفات","المونتاج والرسوم المتحركة","الصوت وتصحيح الألوان","التسليم النهائي"],contactLabel:"تواصل",contactTitle:"لنصنع<br><em>شيئًا مميزًا.</em>",contactText:"هل لديك مشروع؟ أرسل نبذة عن أهدافك واللقطات والموعد النهائي، وسأرد عليك بخطة مناسبة.",emailLabel:"البريد الإلكتروني",instagramLabel:"إنستغرام",linkedinLabel:"لينكدإن",whatsappLabel:"واتساب",themeDark:"الوضع الداكن",themeLight:"الوضع الفاتح",languageLabel:"اللغة"}
+  en:{navLabel:"Main navigation",navWork:"Work",navServices:"Services",navAbout:"About",navContact:"Contact",hire:"Hire me",viewWork:"View my work",contactMe:"Contact me",role:"VIDEO EDITOR",tagline:"I turn raw footage into compelling visual stories.",intro:"Short-form Reels, YouTube long-form and commercial edits, built around pace, clarity and a finish that holds up on every screen.",badge:"REELS · YOUTUBE · COMMERCIAL<br><strong>OPEN FOR PAID PROJECTS</strong>",servicesLabel:"Services",servicesTitle:"What I edit",comparisonLabel:"Before / After",comparisonTitle:"Raw to finished",comparisonText:"Drag the slider to compare an ungraded preview with a polished color treatment.",comparisonBefore:"Before · raw",comparisonAfter:"After · graded",comparisonControl:"Drag to compare raw and finished image",services:[["Short-Form Video Editing","Reels and Shorts with tight hooks, rhythm and captions built to hold attention."],["YouTube Video Editing","Structured long-form edits that keep viewers watching and your channel consistent."],["Commercial Video Editing","Promotional cuts that put the product and the message first."],["Motion Graphics & Kinetic Typography","Animated callouts and type that clarify the story, not decorate it."],["Sound Design & Color Grading","Clean audio, purposeful sound effects and a cinematic, consistent look."]],aboutLabel:"About",aboutTitle:"Independent<br>video editor",aboutLead:CONFIG.about.lead,aboutBody:CONFIG.about.body,workflowLabel:"Workflow",workflowTitle:"From brief<br>to delivery",workflow:[["Brief & Creative Direction","Align on goals, audience, style, and deliverables.","Typical estimate: 1 day"],["Footage & Asset Preparation","Organize media, review assets, and flag anything missing.","Typical estimate: 1–2 days"],["Editing & Motion Design","Shape the story, refine pacing, and add captions or graphics.","Typical estimate: 2–5 days"],["Sound Design & Color","Clean and mix audio, then apply a consistent color grade.","Typical estimate: 1–2 days"],["Final Delivery","Apply feedback, check exports, and prepare final files.","Typical estimate: 1 day"]],contactLabel:"Contact",contactTitle:"Let’s cut<br><em>something.</em>",contactText:"Have a project in mind? Send a short brief with your goals, footage and deadline, and I’ll reply with a plan.",emailLabel:"Email",instagramLabel:"Instagram",linkedinLabel:"LinkedIn",whatsappLabel:"WhatsApp",themeDark:"Dark mode",themeLight:"Light mode",languageLabel:"Language"},
+  fr:{navLabel:"Navigation principale",navWork:"Projets",navServices:"Services",navAbout:"À propos",navContact:"Contact",hire:"Me contacter",viewWork:"Voir mes projets",contactMe:"Me contacter",role:"MONTEUR VIDÉO",tagline:"Je transforme vos images brutes en histoires visuelles captivantes.",intro:"Des Reels courts, des vidéos YouTube longues et des montages publicitaires, conçus pour le rythme, la clarté et un rendu soigné sur tous les écrans.",badge:"REELS · YOUTUBE · PUBLICITÉ<br><strong>DISPONIBLE POUR DES PROJETS RÉMUNÉRÉS</strong>",servicesLabel:"Services",servicesTitle:"Ce que je monte",comparisonLabel:"Avant / Après",comparisonTitle:"Du brut au rendu final",comparisonText:"Faites glisser le curseur pour comparer un aperçu brut à une image étalonnée.",comparisonBefore:"Avant · brut",comparisonAfter:"Après · étalonné",comparisonControl:"Faites glisser pour comparer l’image brute et le rendu final",services:[["Montage vidéo court","Reels et Shorts au rythme soutenu, avec des accroches et des sous-titres qui captent l’attention."],["Montage vidéo YouTube","Des montages longs et structurés qui fidélisent les spectateurs et donnent une cohérence à votre chaîne."],["Montage publicitaire","Des vidéos promotionnelles qui mettent le produit et le message au premier plan."],["Motion design et typographie animée","Des animations et textes qui servent le récit sans le surcharger."],["Design sonore et étalonnage","Un son net, des effets maîtrisés et une image cinématographique cohérente."]],aboutLabel:"À propos",aboutTitle:"Monteur vidéo<br>indépendant",aboutLead:"Monteur vidéo trilingue : anglais, français et arabe.",aboutBody:"Je monte et livre des vidéos en anglais, français et arabe. Reels · YouTube · publicités — avec rythme, clarté et une finition soignée sur tous les écrans.",workflowLabel:"Méthode",workflowTitle:"Du brief<br>à la livraison",workflow:[["Brief et direction créative","Aligner les objectifs, le public, le style et les livrables.","Délai indicatif : 1 jour"],["Préparation des images et ressources","Trier les fichiers, vérifier les ressources et repérer les éléments manquants.","Délai indicatif : 1–2 jours"],["Montage et motion design","Construire le récit, régler le rythme et ajouter sous-titres ou animations.","Délai indicatif : 2–5 jours"],["Son et étalonnage","Nettoyer et mixer le son, puis harmoniser les couleurs.","Délai indicatif : 1–2 jours"],["Livraison finale","Intégrer les retours, vérifier les exports et préparer les fichiers finaux.","Délai indicatif : 1 jour"]],contactLabel:"Contact",contactTitle:"Donnons vie<br><em>à vos idées.</em>",contactText:"Vous avez un projet ? Envoyez un bref aperçu de vos objectifs, de vos images et de votre délai ; je vous répondrai avec une proposition.",emailLabel:"E-mail",instagramLabel:"Instagram",linkedinLabel:"LinkedIn",whatsappLabel:"WhatsApp",themeDark:"Mode sombre",themeLight:"Mode clair",languageLabel:"Langue"},
+  ar:{navLabel:"التنقل الرئيسي",navWork:"الأعمال",navServices:"الخدمات",navAbout:"نبذة عني",navContact:"تواصل",hire:"اطلب العمل",viewWork:"شاهد أعمالي",contactMe:"تواصل معي",role:"محرر فيديو",tagline:"أحوّل اللقطات الخام إلى قصص بصرية آسرة.",intro:"مونتاج ريلز قصيرة وفيديوهات يوتيوب طويلة وإعلانات، بإيقاع واضح وجودة متقنة على كل شاشة.",badge:"ريلز · يوتيوب · إعلانات<br><strong>متاح للمشاريع المدفوعة</strong>",servicesLabel:"الخدمات",servicesTitle:"ما الذي أحرّره",comparisonLabel:"قبل / بعد",comparisonTitle:"من الخام إلى النسخة النهائية",comparisonText:"حرّك المؤشر لمقارنة معاينة خام مع معالجة لونية نهائية.",comparisonBefore:"قبل · خام",comparisonAfter:"بعد · معالجة لونية",comparisonControl:"حرّك للمقارنة بين الصورة الخام والنسخة النهائية",services:[["مونتاج الفيديوهات القصيرة","ريلز وشورتس بإيقاع جذاب ومقدمات سريعة وترجمة تحافظ على انتباه المشاهد."],["مونتاج فيديوهات يوتيوب","مونتاج طويل ومنظم يحافظ على متابعة المشاهدين ويمنح قناتك أسلوبًا متسقًا."],["مونتاج الإعلانات","مقاطع ترويجية تضع المنتج والرسالة في المقدمة."],["الرسوم المتحركة والطباعة الحركية","عناصر ونصوص متحركة توضّح القصة دون تشتيت الانتباه."],["تصميم الصوت وتصحيح الألوان","صوت نقي ومؤثرات مدروسة ومظهر سينمائي متناسق."]],aboutLabel:"نبذة عني",aboutTitle:"محرر فيديو<br>مستقل",aboutLead:"محرر فيديو بالإنجليزية والفرنسية والعربية.",aboutBody:"أحرّر الفيديوهات وأسلّمها بالإنجليزية والفرنسية والعربية. ريلز · يوتيوب · إعلانات — بإيقاع واضح وجودة متقنة على كل شاشة.",workflowLabel:"آلية العمل",workflowTitle:"من الفكرة<br>إلى التسليم",workflow:[["الموجز والتوجيه الإبداعي","تحديد الأهداف والجمهور والأسلوب والمخرجات.","المدة التقديرية: يوم واحد"],["تجهيز اللقطات والملفات","تنظيم الوسائط ومراجعة الملفات وتحديد النواقص.","المدة التقديرية: يوم إلى يومين"],["المونتاج والرسوم المتحركة","بناء القصة وضبط الإيقاع وإضافة الترجمة أو الرسوم.","المدة التقديرية: يومان إلى خمسة أيام"],["الصوت وتصحيح الألوان","تنقية الصوت ومزجه وتوحيد معالجة الألوان.","المدة التقديرية: يوم إلى يومين"],["التسليم النهائي","تطبيق الملاحظات وفحص التصدير وتجهيز الملفات النهائية.","المدة التقديرية: يوم واحد"]],contactLabel:"تواصل",contactTitle:"لنصنع<br><em>شيئًا مميزًا.</em>",contactText:"هل لديك مشروع؟ أرسل نبذة عن أهدافك واللقطات والموعد النهائي، وسأرد عليك بخطة مناسبة.",emailLabel:"البريد الإلكتروني",instagramLabel:"إنستغرام",linkedinLabel:"لينكدإن",whatsappLabel:"واتساب",themeDark:"الوضع الداكن",themeLight:"الوضع الفاتح",languageLabel:"اللغة"}
 };
 
 const $=(s,r=document)=>r.querySelector(s), el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
@@ -271,6 +303,17 @@ function renderProjects(){
     if(typeof io!=="undefined")io.observe(b);
   });
 }
+function renderComparison(project){
+  const id=getYouTubeId(project.youtubeUrl),hasPair=Boolean(project.beforeUrl&&project.afterUrl);
+  const fallback=id?"https://img.youtube.com/vi/"+id+"/hqdefault.jpg":"";
+  const beforeUrl=project.beforeUrl||fallback,afterUrl=project.afterUrl||fallback;
+  if(!beforeUrl||!afterUrl)return;
+  $(".compare-after").src=afterUrl;$(".compare-before").src=beforeUrl;
+  const section=$("#comparison");
+  $("#comparisonStage").classList.toggle("is-demo",!hasPair);
+  section.hidden=false;
+  if(typeof io!=="undefined")section.querySelectorAll(".rv").forEach(node=>io.observe(node));
+}
 async function loadProjects(){
   try{
     const response=await fetch(PROJECTS_CSV_URL);
@@ -308,11 +351,15 @@ async function loadProjects(){
         description:cell(values,"description"),
         client:cell(values,"client"),
         role:cell(values,"role"),
-        software:cell(values,"software")
+        software:cell(values,"software"),
+        beforeUrl:cell(values,"beforeurl")||cell(values,"rawurl"),
+        afterUrl:cell(values,"afterurl")||cell(values,"finalurl")
       };
     }).filter(p=>p.id&&p.title&&p.category&&p.youtubeUrl&&p.description&&["vertical","horizontal"].includes(p.orientation));
     if(!projects.length)throw new Error("No valid projects were found");
     renderFilters();renderProjects();
+    const comparisonProject=projects.find(project=>project.beforeUrl&&project.afterUrl)||projects.find(project=>getYouTubeId(project.youtubeUrl));
+    if(comparisonProject)renderComparison(comparisonProject);
   }catch(error){grid.append(el("p","note","Projects could not be loaded. Check the published Google Sheets CSV endpoint and its sharing settings."));console.error(error)}
 }
 
@@ -339,13 +386,15 @@ dlg.addEventListener("cancel",e=>{e.preventDefault();closeModal()});
 
 /* translated services, workflow and contact labels */
 const srv=$("#srv"),st=$("#steps"),L=$("#links"),C=CONFIG.contact;
+const comparisonStage=$("#comparisonStage"),comparisonRange=$("#comparisonRange");
+comparisonRange.addEventListener("input",()=>comparisonStage.style.setProperty("--split",comparisonRange.value+"%"));
 function renderServices(t){
   srv.textContent="";
   t.services.forEach(([title,description],i)=>{const r=el("div","srv rv");r.append(el("span","n","0"+(i+1)),el("h3","",title),el("p","",description));srv.append(r);io.observe(r)});
 }
 function renderWorkflow(t){
   st.textContent="";
-  t.workflow.forEach((label,i)=>{const d=el("div","step rv");d.append(el("div","n","0"+(i+1)),el("h3","",label));st.append(d);io.observe(d)});
+  t.workflow.forEach(([title,description,duration],i)=>{const d=el("div","step rv");d.append(el("div","n","0"+(i+1)),el("h3","",title),el("p","",description),el("small","duration",duration));st.append(d);io.observe(d)});
 }
 function renderContactLinks(t){
   L.textContent="";
@@ -375,6 +424,7 @@ function applyLanguage(language){
   document.querySelectorAll("[data-i18n]").forEach(n=>{const value=t[n.dataset.i18n];if(value!=null)n.textContent=value});
   document.querySelectorAll("[data-i18n-html]").forEach(n=>{const value=t[n.dataset.i18nHtml];if(value!=null)n.innerHTML=value});
   document.querySelectorAll("[data-k='aboutLead'],[data-k='aboutBody']").forEach(n=>n.textContent=t[n.dataset.k]);
+  comparisonRange.setAttribute("aria-label",t.comparisonControl);comparisonStage.setAttribute("aria-label",t.comparisonControl);
   $("nav").setAttribute("aria-label",t.navLabel);$("#languageSelect").setAttribute("aria-label",t.languageLabel);$("#languageSelect").value=activeLanguage;
   menuToggle.textContent=MENU_LABELS[activeLanguage][menuToggle.getAttribute("aria-expanded")==="true"?1:0];
   renderServices(t);renderWorkflow(t);renderContactLinks(t);applyTheme(activeTheme);
