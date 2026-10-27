@@ -526,13 +526,13 @@ function drawGlyphs(){
   const hr=heroGlyphs.parentElement.getBoundingClientRect(),pr=heroPortrait.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
   heroGlyphs.width=Math.round(hr.width*dpr);heroGlyphs.height=Math.round(hr.height*dpr);
   const c=heroGlyphs.getContext("2d");c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,hr.width,hr.height);
-  const cx=pr.left-hr.left+pr.width*.36,cy=pr.top-hr.top+pr.height*.74,rx=pr.width*.8,ry=pr.height*.4,step=14;
+  const cx=pr.left-hr.left+pr.width*.36,cy=pr.top-hr.top+pr.height*.74,rx=pr.width*.62,ry=pr.height*.36,step=15;
   const chars="影刃忍闇斬風夜月ミニシソノヒビカゲー・ノニシ—/=ナヲンコヤ";
   let seed=20261026;const rnd=()=>(seed=(seed*1664525+1013904223)>>>0)/4294967296;
   c.font="500 12px 'Inter',sans-serif";c.textAlign="center";c.textBaseline="middle";c.fillStyle="#f1ece4";
   for(let y=step/2;y<hr.height;y+=step)for(let x=step/2;x<hr.width;x+=step){
-    const d=((x-cx)/rx)**2+((y-cy)/ry)**2,p=Math.exp(-d*1.25)*.62,r=rnd(),g=chars[Math.floor(rnd()*chars.length)];
-    if(r<p){c.globalAlpha=Math.min(.8,.18+rnd()*.6*Math.exp(-d*.6));c.fillText(g,x+(rnd()-.5)*3,y+(rnd()-.5)*3)}
+    const d=((x-cx)/rx)**2+((y-cy)/ry)**2,p=Math.exp(-d*1.4)*.4,r=rnd(),g=chars[Math.floor(rnd()*chars.length)];
+    if(r<p){c.globalAlpha=Math.min(.6,.14+rnd()*.45*Math.exp(-d*.7));c.fillText(g,x+(rnd()-.5)*3,y+(rnd()-.5)*3)}
   }
   c.globalAlpha=1;
 }
@@ -593,11 +593,11 @@ if(heroPortrait&&heroCostume){
       rx.globalCompositeOperation="destination-in";rx.drawImage(mc,0,0,W,H);rx.globalCompositeOperation="source-over";
     }
     /* glowing rim = wider stroke minus the mask */
-    /* fiery edge: soft wide flame + hot core, mask cut away so the costume stays visible inside */
+    /* fiery edge: soft flame + hot core around the mask; the inside is cut out so the costume stays clear */
     gx.globalCompositeOperation="source-over";
-    gx.strokeStyle=SLASH;strokes(gx,30,.55);
-    gx.strokeStyle=RIM;strokes(gx,8,1);
-    gx.globalCompositeOperation="destination-out";gx.globalAlpha=.62;gx.drawImage(mc,0,0,W,H);gx.globalAlpha=1;gx.globalCompositeOperation="source-over";
+    gx.strokeStyle=SLASH;strokes(gx,20,.5);
+    gx.strokeStyle=RIM;strokes(gx,7,1);
+    gx.globalCompositeOperation="destination-out";gx.drawImage(mc,0,0,W,H);gx.globalCompositeOperation="source-over";
     /* embers */
     gx.fillStyle=RIM;
     for(const q of sparks){q.x+=q.vx;q.y+=q.vy;gx.globalAlpha=Math.max(0,1-(now-q.t)/q.life);gx.beginPath();gx.arc(q.x,q.y,q.r,0,6.283);gx.fill()}
